@@ -113,6 +113,13 @@ DATABASES = {
         'OPTIONS': {
             'options': '-c search_path=drf_schema'
         },
+        'TEST': {
+            'NAME': 'test_postgres_db',
+            'OPTIONS': {
+                'options': '-c search_path=drf_schema,public',
+                'init_command': 'CREATE SCHEMA IF NOT EXISTS drf_schema;'
+            },
+        },
     }
 }
 
