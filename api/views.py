@@ -1,3 +1,4 @@
+from rest_framework import views
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
@@ -19,7 +20,13 @@ class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     # authentication_classes = TokenAuthentication,
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
+
+
+class SampleAPIView(views.APIView):
+
+    def get(self, request, *args, **option):
+        return
 
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
