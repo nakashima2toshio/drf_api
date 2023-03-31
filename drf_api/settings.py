@@ -27,12 +27,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
     'django_filters',
 
     'api.apps.ApiConfig',
+    'sns_app.apps.SnsAppConfig',
+    'ec_app.apps.EcAppConfig',
     'corsheaders',
 ]
 
@@ -71,6 +74,8 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
+    'ROTATE_REFRESH_TOKENS': True,
+    'UPDATE_LAST_LOGIN': True,
     'AUTH_HEADER_TYPES': ('JWT', ),
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken', )
 }
@@ -114,12 +119,9 @@ DATABASES = {
             'options': '-c search_path=drf_schema'
         },
         'TEST': {
-            'NAME': 'test_postgres_db',
-            'OPTIONS': {
-                'options': '-c search_path=drf_schema,public',
-                'init_command': 'CREATE SCHEMA IF NOT EXISTS drf_schema;'
-            },
-        },
+            'NAME': 'test_postgis_db',
+            'SCHEMA': 'drf_schema',
+        }
     }
 }
 
@@ -157,7 +159,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -166,14 +173,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'api.CustomUser'
 
-# ローカルコンソール確認用
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# ローカルコンソール確認用
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
 # 本番環境用
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'xxx@gmail.com'
-EMAIL_HOST_PASSWORD = 'xxx'
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'xxx@gmail.com'
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'xxx@gmail.com')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'xxx')
+    EMAIL_USE_TLS = True
+    DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'xxx@gmail.com')
+

@@ -31,3 +31,79 @@ curl \
   -H "Content-Type: application/json" \
   -d '{"username": "admin", "password": "password"}' \
   http://localhost:8000/api/token/
+
+# ----------------------------------------------------
+
+タスク
+GET /api/tasks/ - タスクの一覧を取得
+POST /api/tasks/ - 新しいタスクを作成
+GET /api/tasks/<task_id>/ - 指定したタスクの詳細を取得
+PUT /api/tasks/<task_id>/ - 指定したタスクの情報を更新
+PATCH /api/tasks/<task_id>/ - 指定したタスクの情報を一部更新
+DELETE /api/tasks/<task_id>/ - 指定したタスクを削除
+
+カテゴリ
+GET /api/categories/ - カテゴリの一覧を取得
+POST /api/categories/ - 新しいカテゴリを作成
+GET /api/categories/<category_id>/ - 指定したカテゴリの詳細を取得
+PUT /api/categories/<category_id>/ - 指定したカテゴリの情報を更新
+PATCH /api/categories/<category_id>/ - 指定したカテゴリの情報を一部更新
+DELETE /api/categories/<category_id>/ - 指定したカテゴリを削除
+
+ユーザー
+GET /api/users/ - ユーザーの一覧を取得
+POST /api/users/ - 新しいユーザーを作成
+GET /api/users/<user_id>/ - 指定したユーザーの詳細を取得
+PUT /api/users/<user_id>/ - 指定したユーザーの情報を更新
+PATCH /api/users/<user_id>/ - 指定したユーザーの情報を一部更新
+DELETE /api/users/<user_id>/ - 指定したユーザーを削除
+
+自分のユーザー情報
+GET /api/myself/ - 自分のユーザー情報を取得
+PUT /api/myself/ - 自分のユーザー情報を更新
+PATCH /api/myself/ - 自分のユーザー情報を一部更新
+
+これらのエンドポイントを実装することで、タスク、カテゴリ、ユーザーの
+CRUD操作が可能になります。また、/api/myself/エンドポイントを使用して、
+現在のユーザーの情報を取得および更新できます。
+
+# ---
+ユーザー
+GET /api/users/ - ユーザーの一覧を取得
+POST /api/users/ - 新しいユーザーを作成
+GET /api/users/<user_id>/ - 指定したユーザーの詳細を取得
+PUT /api/users/<user_id>/ - 指定したユーザーの情報を更新
+DELETE /api/users/<user_id>/ - 指定したユーザーを削除
+
+# ---
+プロフィール
+GET /api/profiles/ - プロフィールの一覧を取得
+POST /api/profiles/ - 新しいプロフィールを作成
+GET /api/profiles/<profile_id>/ - 指定したプロフィールの詳細を取得
+PUT /api/profiles/<profile_id>/ - 指定したプロフィールの情報を更新
+DELETE /api/profiles/<profile_id>/ - 指定したプロフィールを削除
+
+# ---
+投稿
+GET /api/posts/ - 投稿の一覧を取得
+POST /api/posts/ - 新しい投稿を作成
+GET /api/posts/<post_id>/ - 指定した投稿の詳細を取得
+PUT /api/posts/<post_id>/ - 指定した投稿の情報を更新
+DELETE /api/posts/<post_id>/ - 指定した投稿を削除
+
+# ---
+いいね
+GET /api/likes/ - いいねの一覧を取得
+POST /api/likes/ - 新しいいいねを作成
+GET /api/likes/<like_id>/ - 指定したいいねの詳細を取得
+PUT /api/likes/<like_id>/ - 指定したいいねの情報を更新
+DELETE /api/likes/<like_id>/ - 指定したいいねを削除
+
+# ---
+フォロー
+GET /api/follows/ - フォローの一覧を取得
+POST /api/follows/ - 新しいフォローを作成
+GET /api/follows/<follow_id>/ - 指定したフォローの詳細を取得
+PUT /api/follows/<follow_id>/ - 指定したフォローの情報を更新
+DELETE /api/follows/<follow_id>/ - 指定したフォローを削除
+

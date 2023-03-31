@@ -1,34 +1,25 @@
+"""
+CustomUserViewSet と ProfileViewSet の２つの ViewSet クラスを作成しました。
+これらの ViewSet クラスはそれぞれ、
+CustomUser モデルと SnsProfile モデルに対応する API エンドポイントを提供します。
+
+get_queryset メソッドをオーバーライドして、認証されたユーザーに対してのみ、
+自分自身の情報やプロフィール情報にアクセスできるように制限しています。
+これにより、他のユーザーの情報へのアクセスが制限されます。
+
+"""
 from rest_framework import serializers
+from django.contrib.auth import get_user_model
+from sns_app.models import Profile
 
-from .models import Category
-from .models import Task
-from .models import CustomUser  # Import CustomUser instead of User
-from rest_framework.authtoken.models import Token
-
-
-class UserSerializer(serializers.ModelSerializer):
+class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomUser
-        fields = ['id', 'username', 'password']  # fields = "__all__"
-        extra_kwargs = {'password': {'write_only': True, 'required': True}}
+        model = get_user_model()
+        fields = ['id', 'username', 'email', 'first_name', 'last_name']
 
-    def create(self, validated_data):
-        user = CustomUser.objects.create_user(**validated_data)
-        Token.objects.create(user=user)
-        return user
-
-
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = ('name', 'slug')
-
-
-class TaskSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)
-    updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)
+class ProfileSerializer(serializers.ModelSerializer):
+    custom_user = CustomUserSerializer(read_only=True)
 
     class Meta:
-        model = Task
-        fields = ['id', 'user', 'categories', 'title', 'body', 'created_at', 'updated_at']
+        model = Profile
+        fields = ['custom_user', 'display_name', 'bio']

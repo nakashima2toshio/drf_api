@@ -1,14 +1,14 @@
-#
-from django.urls import path
-from django.conf.urls import include
-from rest_framework import routers
-from api.views import TaskViewSet, UserViewSet, ManageUserView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from api.views import CustomUserViewSet, ProfileViewSet
 
-router = routers.DefaultRouter()
-router.register('tasks', TaskViewSet)
-router.register('users', UserViewSet)
+router = DefaultRouter()
+router.register(r'users', CustomUserViewSet)
+router.register(r'profiles', ProfileViewSet)
 
 urlpatterns = [
-    path('myself/', ManageUserView.as_view(), name='myself'),
     path('', include(router.urls)),
 ]
+
+#  path('myself/', ManageUserView.as_view(), name='myself'),
+
