@@ -1,6 +1,6 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from rest_framework import viewsets, permissions
-from api.models import CustomUser, CustomUserProfile
+from api.models import CustomUser
 from api.serializers import CustomUserSerializer, ProfileSerializer
 from sns_app.models import Profile as SnsProfile
 

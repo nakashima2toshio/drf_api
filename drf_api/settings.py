@@ -103,28 +103,29 @@ WSGI_APPLICATION = 'drf_api.wsgi.application'
 
 # Database
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-    #
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'OPTIONS': {
+            'options': '-c search_path=drf_schema,public'
+        },
         'NAME': 'postgres_db',
         'USER': 'admin',
         'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '5432',
+    },
+    'TEST': {
+        'NAME': 'test_postgres_db',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'OPTIONS': {
-            'options': '-c search_path=drf_schema'
+            'options': '-c search_path=public'
         },
-        'TEST': {
-            'NAME': 'test_postgis_db',
-            'SCHEMA': 'drf_schema',
-        }
+        'USER': 'admin',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
