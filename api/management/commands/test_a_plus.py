@@ -6,7 +6,7 @@ from unittest import TestCase
 class APlusTestCase(TestCase):
 
     def setUp(self) -> None:
-
+        self.answer = 5
         print('setUp-->', __class__.__name__)
 
     def tearDown(self):
@@ -17,10 +17,3 @@ class APlusTestCase(TestCase):
         a = 5
         assert a is self.answer
 
-    def test_4a(self):
-        print('test-4a')
-        self.assertTrue(True)
-
-    def test_5a(self):
-        print('test-5a')
-        self.assertTrue(True)
