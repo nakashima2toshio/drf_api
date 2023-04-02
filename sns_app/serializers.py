@@ -7,6 +7,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['id', 'username']
+        ref_name = 'SNS_CustomUser'
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -48,4 +49,5 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['custom_user', 'display_name', 'bio']
+        ref_name = 'SNSAppProfile'
 

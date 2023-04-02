@@ -16,6 +16,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ['id', 'username', 'email', 'first_name', 'last_name']
+        ref_name = 'API_CustomUser'
 
 class ProfileSerializer(serializers.ModelSerializer):
     custom_user = CustomUserSerializer(read_only=True)
@@ -23,3 +24,4 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['custom_user', 'display_name', 'bio']
+        ref_name = 'APIProfile'

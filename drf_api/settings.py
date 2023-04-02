@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_filters',
 
+    'drf_yasg',
+
     'api.apps.ApiConfig',
     'sns_app.apps.SnsAppConfig',
     'ec_app.apps.EcAppConfig',

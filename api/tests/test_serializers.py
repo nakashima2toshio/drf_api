@@ -1,4 +1,20 @@
 #
+"""
+CustomUserSerializer のテスト
+
+setUp メソッドで CustomUser インスタンスを作成し、シリアライザーに渡す。
+テストメソッドでシリアライザーが期待通りに動作しているか検証する。
+シリアライザーのデータに期待されるフィールドが含まれていることを確認する。
+各フィールドの内容が正しいことを確認する。
+ProfileSerializer のテスト
+
+setUp メソッドで CustomUser インスタンスと Profile インスタンスを作成し、シリアライザーに渡す。
+テストメソッドでシリアライザーが期待通りに動作しているか検証する。
+シリアライザーのデータに期待されるフィールドが含まれていることを確認する。
+各フィールドの内容が正しいことを確認する。
+Profile シリアライザーの custom_user フィールドに関連する CustomUserSerializer が正しく動作していることを確認する。
+
+"""
 from django.test import TestCase
 from api.serializers import CustomUserSerializer, ProfileSerializer
 from django.contrib.auth import get_user_model

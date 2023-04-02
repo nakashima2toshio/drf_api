@@ -20,9 +20,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 このクラスは、オブジェクトの所有者だけが編集できるように制限します。
 それ以外のユーザーは、読み取り専用のアクセスしかできません。
 このカスタムパーミッションをビューに適用するには、permission_classes属性に追加します。
-"""
 
-"""
 from rest_framework import viewsets
 from .models import MyModel
 from .serializers import MyModelSerializer
