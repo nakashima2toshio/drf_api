@@ -4,6 +4,7 @@
 　・処理
 　・想定出力
 
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 ユニットテスト名: CustomUserViewSetTestCase
 
 テスト概要: CustomUserViewSet のテスト
@@ -48,6 +49,7 @@ test_unauthenticated_user_cannot_update_or_delete_profile_info
 処理: プロフィール情報を更新または削除しようとする
 想定出力: ステータスコードが 403 で、プロフィール情報を更新または削除できない
 
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 ユニットテスト名: CustomUserViewSetTestCase
 
 テスト概要: CustomUserViewSet のテスト
@@ -101,6 +103,8 @@ test_unauthenticated_user_cannot_update_or_delete_profile_info
 - 入力: 未認証のユーザー、更新したいユーザー情報
 - 処理: ユーザー情報を更新しようとする
 - 想定出力: ステータスコードが 403 で、ユーザー情報を更新できない
+
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 ユニットテスト名: ProfileViewSetTestCase
 
 テスト概要: ProfileViewSet のテスト
@@ -126,6 +130,7 @@ test_unauthenticated_user_cannot_update_or_delete_profile_info
 - 処理: プロフィール情報を削除しようとする
 - 想定出力: ステータスコードが 403 で、プロフィール情報を削除できない
 
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 ユニットテスト名: CustomUserViewSetTestCase
 
 テスト概要: CustomUserViewSet のテスト
@@ -138,6 +143,8 @@ test_unauthenticated_user_cannot_update_or_delete_profile_info
 - 入力: 未認証のユーザー
 - 処理: ユーザー情報を削除しようとする
 - 想定出力: ステータスコードが 403 で、ユーザー情報を削除できない
+
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 ユニットテスト名: ProfileViewSetTestCase
 
 テスト概要: ProfileViewSet のテスト
@@ -163,6 +170,7 @@ test_unauthenticated_user_cannot_update_or_delete_profile_info
 - 処理: プロフィール情報の一覧を取得しようとする
 - 想定出力: ステータスコードが 403 で、プロフィール情報の一覧が取得できない
 
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 ユニットテスト名: ProfileViewSetTestCase
 
 テスト概要: ProfileViewSet のテスト

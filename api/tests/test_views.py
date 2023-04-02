@@ -4,6 +4,23 @@ from rest_framework.test import APITestCase
 from api.models import CustomUser
 from sns_app.models import Profile
 
+"""
+api/tests/test_views.py のユニットテスト要件。。
+
+CustomUserViewSet テスト:
+a. 認証済みユーザーが自分のユーザー情報を取得できること
+b. 認証されていないユーザーがユーザー情報を取得できないこと
+c. 認証済みユーザーが自分のユーザー情報を更新できること
+d. 認証済みユーザーが自分のユーザー情報を削除できること
+e. 認証されていないユーザーがユーザー情報を更新・削除できないこと
+
+ProfileViewSet テスト:
+a. 認証済みユーザーが自分のプロフィール情報を取得できること
+b. 認証されていないユーザーがプロフィール情報を取得できないこと
+c. 認証済みユーザーが自分のプロフィール情報を更新できること
+d. 認証済みユーザーが自分のプロフィール情報を削除できること
+e. 認証されていないユーザーがプロフィール情報を更新・削除できないこと
+"""
 
 class CustomUserViewSetTestCase(APITestCase):
     def setUp(self):

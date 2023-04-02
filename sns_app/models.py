@@ -1,6 +1,37 @@
 from django.db import models
 from api.models import CustomUser
 
+"""
+Profile
+custom_user: 1対1リレーション。CustomUserとProfileが1対1の関係で紐づいています。
+CustomUserが削除されると、関連するProfileも削除されます。
+
+Post
+custom_user: 外部キー（Foreign Key）リレーション。
+CustomUserとPostが多対1の関係で紐づいています。CustomUserが削除されると、関連するPostも削除されます。
+
+Like
+custom_user: 外部キー（Foreign Key）リレーション。
+CustomUserとLikeが多対1の関係で紐づいています。CustomUserが削除されると、関連するLikeも削除されます。
+post: 外部キー（Foreign Key）リレーション。PostとLikeが多対1の関係で紐づいています。
+Postが削除されると、関連するLikeも削除されます。
+
+Comment
+custom_user: 外部キー（Foreign Key）リレーション。
+CustomUserとCommentが多対1の関係で紐づいています。
+CustomUserが削除されると、関連するCommentも削除されます。
+post: 外部キー（Foreign Key）リレーション。
+PostとCommentが多対1の関係で紐づいています。
+Postが削除されると、関連するCommentも削除されます。
+
+Follow
+follower: 外部キー（Foreign Key）リレーション。
+CustomUser（フォローする側）とFollowが多対1の関係で紐づいています。
+CustomUserが削除されると、関連するFollowも削除されます。
+followed: 外部キー（Foreign Key）リレーション。
+CustomUser（フォローされる側）とFollowが多対1の関係で紐づいています。
+CustomUserが削除されると、関連するFollowも削除されます。
+"""
 
 class Profile(models.Model):
     custom_user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)

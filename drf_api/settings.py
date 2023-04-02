@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django_filters',
 
     'drf_yasg',
+    'django_extensions',
 
     'api.apps.ApiConfig',
     'sns_app.apps.SnsAppConfig',
