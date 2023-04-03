@@ -1,37 +1,3 @@
-
-#
-# pip install djangorestframework-simplejwt
-# pip install cryptography
-
-
-# django-admin startproject tasks
-# django-admin startapp api
-
-# pip install django-cors-headers
-
-# pip install psycopg2-binary
-
-# python manage.py migrate
-# python manage.py makemigrations
-
-# python manage.py createsuperuser
-# python manage.py changepassword <user_name>
-
-# $ python manage.py runserver
-
-# [information]
-# $ http POST http://127.0.0.1:8000/api-token-auth/ username=admin@email.com password=password
-
-# Simple JWT
-# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html#requirements
-# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html#installation
-
-curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"username": "admin", "password": "password"}' \
-  http://localhost:8000/api/token/
-
 # ----------------------------------------------------
 
 タスク
@@ -63,9 +29,9 @@ GET /api/myself/ - 自分のユーザー情報を取得
 PUT /api/myself/ - 自分のユーザー情報を更新
 PATCH /api/myself/ - 自分のユーザー情報を一部更新
 
-これらのエンドポイントを実装することで、タスク、カテゴリ、ユーザーの
-CRUD操作が可能になります。また、/api/myself/エンドポイントを使用して、
-現在のユーザーの情報を取得および更新できます。
+これらのエンドポイントで、
+タスク、カテゴリ、ユーザーのCRUD操作が可能になります。
+また、/api/myself/エンドポイントを使用して、現在のユーザーの情報を取得および更新できます。
 
 # ---
 ユーザー
