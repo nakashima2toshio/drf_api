@@ -1,4 +1,11 @@
 
+api-token-auth
+
+| HTTP Method | Input                            | Processing                | Output                             | Functionality                                |
+|-------------|----------------------------------|---------------------------|------------------------------------|----------------------------------------------|
+| POST        | `username`, `password` (JSON)    | Validate user credentials | `token` (JSON) on success          | Log in and obtain authentication token       |
+
+
 | API エンドポイント             | HTTP メソッド | 機能                          |
 |------------------------------|------------|-----------------------------|
 | /sns_app/posts/              | GET        | 投稿一覧を取得                  |

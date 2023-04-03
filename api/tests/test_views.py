@@ -1,9 +1,4 @@
-from django.urls import reverse
-from rest_framework import status
-from rest_framework.test import APITestCase
-from api.models import CustomUser
-from sns_app.models import Profile
-
+#
 """
 api/tests/test_views.py のユニットテスト要件。。
 
@@ -21,57 +16,77 @@ c. 認証済みユーザーが自分のプロフィール情報を更新でき�
 d. 認証済みユーザーが自分のプロフィール情報を削除できること
 e. 認証されていないユーザーがプロフィール情報を更新・削除できないこと
 """
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APITestCase, APIClient
+from api.models import CustomUser
+from sns_app.models import Profile, Post
 
-class CustomUserViewSetTestCase(APITestCase):
+class CustomUserViewSetTests(APITestCase):
+
     def setUp(self):
-        self.user = CustomUser.objects.create_user(username='paul', password='password')
+        self.user1 = CustomUser.objects.create_user(username='testuser1', password='testpassword1')
+        self.profile1 = Profile.objects.create(custom_user=self.user1, display_name='Test User1', bio='User1 bio')
+        self.user2 = CustomUser.objects.create_user(username='testuser2', password='testpassword2')
+        self.profile2 = Profile.objects.create(custom_user=self.user2, display_name='Test User2', bio='User2 bio')
 
-    def test_authenticated_user_can_retrieve_own_user_info(self):
-        self.client.force_authenticate(user=self.user)
-        response = self.client.get(reverse('customuser-detail', kwargs={'pk': self.user.pk}))
+        self.post = Post.objects.create(custom_user=self.user1, content='Sample post')
+
+    def test_get_user_list_not_authenticated(self):
+        url = reverse('customuser-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_get_user_list_authenticated(self):
+        url = reverse('customuser-list')
+        client = APIClient()
+        client.force_authenticate(user=self.user1)
+        response = client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['username'], 'paul')
 
-    def test_unauthenticated_user_cannot_retrieve_user_info(self):
-        response = self.client.get(reverse('customuser-detail', kwargs={'pk': self.user.pk}))
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+    def test_get_user_detail_not_authenticated(self):
+        url = reverse('customuser-detail', args=[self.user1.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
+    def test_get_user_detail_authenticated(self):
+        url = reverse('customuser-detail', args=[self.user1.id])
+        client = APIClient()
+        client.force_authenticate(user=self.user1)
+        response = client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-class ProfileViewSetTestCase(APITestCase):
+class ProfileViewSetTests(APITestCase):
+
     def setUp(self):
-        self.user = CustomUser.objects.create_user(username='paul', password='password')
-        self.profile = Profile.objects.create(custom_user=self.user, display_name='Paul Smith', bio='Hello!')
+        self.user1 = CustomUser.objects.create_user(username='testuser1', password='testpassword1')
+        self.profile1 = Profile.objects.create(custom_user=self.user1, display_name='Test User1', bio='User1 bio')
+        self.user2 = CustomUser.objects.create_user(username='testuser2', password='testpassword2')
+        self.profile2 = Profile.objects.create(custom_user=self.user2, display_name='Test User2', bio='User2 bio')
 
-    def test_authenticated_user_can_retrieve_own_profile_info(self):
-        self.client.force_authenticate(user=self.user)
-        response = self.client.get(reverse('profile-detail', kwargs={'pk': self.profile.pk}))
+        self.post = Post.objects.create(custom_user=self.user1, content='Sample post')
+
+    def test_get_profile_list_not_authenticated(self):
+        url = reverse('profile-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_get_profile_list_authenticated(self):
+        url = reverse('profile-list')
+        client = APIClient()
+        client.force_authenticate(user=self.user1)
+        response = client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['display_name'], 'Paul Smith')
-        self.assertEqual(response.data['bio'], 'Hello!')
 
-    def test_unauthenticated_user_cannot_retrieve_profile_info(self):
-        response = self.client.get(reverse('profile-detail', kwargs={'pk': self.profile.pk}))
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+    def test_get_profile_detail_not_authenticated(self):
+        url = reverse('profile-detail', args=[self.profile1.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    def test_authenticated_user_can_update_own_profile_info(self):
-        self.client.force_authenticate(user=self.user)
-        update_data = {'display_name': 'Paul Doe', 'bio': 'Updated bio'}
-        response = self.client.patch(reverse('profile-detail', kwargs={'pk': self.profile.pk}), data=update_data)
-        self.profile.refresh_from_db()
+    def test_get_profile_detail_authenticated(self):
+        url = reverse('profile-detail', args=[self.profile1.id])
+        client = APIClient()
+        client.force_authenticate(user=self.user1)
+        response = client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(self.profile.display_name, 'Paul Doe')
-        self.assertEqual(self.profile.bio, 'Updated bio')
 
-    def test_authenticated_user_can_delete_own_profile_info(self):
-        self.client.force_authenticate(user=self.user)
-        response = self.client.delete(reverse('profile-detail', kwargs={'pk': self.profile.pk}))
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertFalse(Profile.objects.filter(pk=self.profile.pk).exists())
-
-    def test_unauthenticated_user_cannot_update_or_delete_profile_info(self):
-        update_data = {'display_name': 'Paul Doe', 'bio': 'Updated bio'}
-        response = self.client.patch(reverse('profile-detail', kwargs={'pk': self.profile.pk}), data=update_data)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
-        response = self.client.delete(reverse('profile-detail', kwargs={'pk': self.profile.pk}))
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

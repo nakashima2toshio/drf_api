@@ -1,8 +1,21 @@
 # from django.shortcuts import render
+from requests import Response
 from rest_framework import viewsets, permissions
+from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework.response import Response
+
 from api.models import CustomUser
 from api.serializers import CustomUserSerializer, ProfileSerializer
 from sns_app.models import Profile as SnsProfile
+
+
+class LogoutView(APIView):
+    @staticmethod
+    def post(self, request, *args, **kwargs):
+        request.user.auth_token.delete()
+        return Response({"message": "Successfully logged out."}, status=status.HTTP_200_OK)
+
 
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()

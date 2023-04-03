@@ -20,7 +20,6 @@ from api.serializers import CustomUserSerializer, ProfileSerializer
 from django.contrib.auth import get_user_model
 from sns_app.models import Profile
 
-
 class CustomUserSerializerTestCase(TestCase):
     def setUp(self):
         self.user_data = {
@@ -38,7 +37,6 @@ class CustomUserSerializerTestCase(TestCase):
 
         for key in self.user_data.keys():
             self.assertEqual(serializer.data[key], self.user_data[key])
-
 
 class ProfileSerializerTestCase(TestCase):
     def setUp(self):
@@ -61,3 +59,4 @@ class ProfileSerializerTestCase(TestCase):
 
         user_serializer = CustomUserSerializer(instance=self.user)
         self.assertEqual(serializer.data['custom_user'], user_serializer.data)
+
