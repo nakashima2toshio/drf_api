@@ -1,4 +1,4 @@
-# from django.shortcuts import render
+#
 from requests import Response
 from rest_framework import viewsets, permissions
 from rest_framework.views import APIView
@@ -39,12 +39,4 @@ class ProfileViewSet(viewsets.ModelViewSet):
             return SnsProfile.objects.filter(custom_user=user)
         return SnsProfile.objects.none()
 
-
-# class ManageUserView(generics.RetrieveUpdateAPIView):
-#     serializer_class = CustomUserSerializer
-#     authentication_classes = (TokenAuthentication,)
-#     permission_classes = (IsAuthenticated,)
-#
-#     def get_object(self):
-#         return self.request.user
 
