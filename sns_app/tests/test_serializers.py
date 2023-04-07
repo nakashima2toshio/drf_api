@@ -3,12 +3,17 @@ from api.serializers import CustomUserSerializer
 from sns_app.serializers import PostSerializer, LikeSerializer, CommentSerializer, FollowSerializer, ProfileSerializer
 from api.models import CustomUser
 from sns_app.models import Post, Like, Comment, Follow, Profile
+from sns_app.tests.test_views import fake
+
 
 class CustomUserSerializerTestCase(TestCase):
     def setUp(self):
         self.user_data = {
             'id': 1,
             'username': 'paul',
+            'email': '',
+            'first_name': '',
+            'last_name': '',
         }
         self.user = CustomUser.objects.create(**self.user_data)
 
@@ -31,7 +36,7 @@ class ProfileSerializerTestCase(TestCase):
 
     def test_profile_serializer(self):
         serializer = ProfileSerializer(instance=self.profile)
-        expected_keys = set(['custom_user', 'display_name', 'bio'])
+        expected_keys = {'custom_user', 'display_name', 'bio'}
 
         self.assertEqual(set(serializer.data.keys()), expected_keys)
 
@@ -43,34 +48,30 @@ class ProfileSerializerTestCase(TestCase):
 
 class PostSerializerTestCase(TestCase):
     def setUp(self):
-        self.user = CustomUser.objects.create_user(username='paul', password='password')
-        self.post_data = {
-            'custom_user': self.user,
-            'content': 'This is a test post.',
-            'created_at': '2022-09-01T10:00:00Z',
-        }
-        self.post = Post.objects.create(**self.post_data)
+        self.user = CustomUser.objects.create_user(username=fake.user_name(), password=fake.password())
+        self.profile = Profile.objects.create(custom_user=self.user, display_name=fake.name(), bio=fake.text())
+        self.post = Post.objects.create(author=self.profile, content=fake.text())  # 'author' を使用
 
     def test_post_serializer(self):
         serializer = PostSerializer(instance=self.post)
-        expected_keys = set(['id', 'custom_user', 'content', 'created_at'])
-
+        expected_keys = {'id', 'author', 'content', 'created_at'}
         self.assertEqual(set(serializer.data.keys()), expected_keys)
+        self.assertEqual(serializer.data['content'], self.post.content)
+        user_serializer = ProfileSerializer(instance=self.profile)
+        self.assertEqual(serializer.data['author'], user_serializer.data)
 
-        self.assertEqual(serializer.data['content'], self.post_data['content'])
-
-        user_serializer = CustomUserSerializer(instance=self.user)
-        self.assertEqual(serializer.data['custom_user'], user_serializer.data)
 
 class LikeSerializerTestCase(TestCase):
     def setUp(self):
         self.user = CustomUser.objects.create_user(username='paul', password='password')
-        self.post = Post.objects.create(custom_user=self.user, content='This is a test post.')
+        self.profile = Profile.objects.create(custom_user=self.user, display_name='Paul Smith',
+                                              bio='Software Developer')
+        self.post = Post.objects.create(author=self.profile, content='This is a test post.')
         self.like = Like.objects.create(custom_user=self.user, post=self.post)
 
     def test_like_serializer(self):
         serializer = LikeSerializer(instance=self.like)
-        expected_keys = set(['id', 'custom_user', 'post', 'timestamp'])
+        expected_keys = {'id', 'custom_user', 'post', 'created_at'}
 
         self.assertEqual(set(serializer.data.keys()), expected_keys)
 
@@ -81,7 +82,9 @@ class LikeSerializerTestCase(TestCase):
 class CommentSerializerTestCase(TestCase):
     def setUp(self):
         self.user = CustomUser.objects.create_user(username='paul', password='password')
-        self.post = Post.objects.create(custom_user=self.user, content='This is a test post.')
+        self.profile = Profile.objects.create(custom_user=self.user, display_name='Paul Smith',
+                                              bio='Software Developer')
+        self.post = Post.objects.create(author=self.profile, content='This is a test post.')
         self.comment_data = {
             'custom_user': self.user,
             'post': self.post,
@@ -91,7 +94,7 @@ class CommentSerializerTestCase(TestCase):
 
     def test_comment_serializer(self):
         serializer = CommentSerializer(instance=self.comment)
-        expected_keys = set(['id', 'custom_user', 'post', 'content', 'created_at', 'updated_at'])
+        expected_keys = {'id', 'custom_user', 'post', 'content', 'created_at', 'updated_at'}
 
         self.assertEqual(set(serializer.data.keys()), expected_keys)
 
@@ -109,7 +112,7 @@ class FollowSerializerTestCase(TestCase):
 
     def test_follow_serializer(self):
         serializer = FollowSerializer(instance=self.follow)
-        expected_keys = set(['id', 'follower', 'followed', 'timestamp'])
+        expected_keys = {'id', 'follower', 'followed', 'timestamp'}
 
         self.assertEqual(set(serializer.data.keys()), expected_keys)
 

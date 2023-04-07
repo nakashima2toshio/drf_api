@@ -1,5 +1,6 @@
 from django.db import models
 from api.models import CustomUser
+from django.contrib.auth import get_user_model
 
 """
 Profile
@@ -40,15 +41,15 @@ class Profile(models.Model):
 
 
 class Post(models.Model):
-    custom_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
 
 class Like(models.Model):
-    custom_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    custom_user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)  # 追加
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 class Comment(models.Model):

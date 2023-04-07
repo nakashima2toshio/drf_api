@@ -22,6 +22,9 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]  # 追加
 
+    def perform_create(self, serializer):
+        serializer.save(custom_user=self.request.user)
+
 
 class LikeViewSet(viewsets.ModelViewSet):
     queryset = Like.objects.all()

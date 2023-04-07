@@ -1,21 +1,22 @@
 from rest_framework import serializers
 from api.models import CustomUser
+from api.serializers import ProfileSerializer
 from .models import Post, Like, Comment, Follow, Profile
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['id', 'username']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name']
         ref_name = 'SNS_CustomUser'
 
 
 class PostSerializer(serializers.ModelSerializer):
-    custom_user = CustomUserSerializer(read_only=True)
+    author = ProfileSerializer(read_only=True)
 
     class Meta:
         model = Post
-        fields = ['id', 'custom_user', 'content', 'created_at']
+        fields = ['id', 'author', 'content', 'created_at']
 
 
 class LikeSerializer(serializers.ModelSerializer):
@@ -23,7 +24,7 @@ class LikeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Like
-        fields = ['id', 'custom_user', 'post', 'timestamp']
+        fields = ['id', 'custom_user', 'post', 'created_at']
 
 
 class CommentSerializer(serializers.ModelSerializer):
