@@ -1,7 +1,7 @@
 [
   {
     "model": "api.customuser",
-    "pk": 1,
+    "pk": 3,
     "fields": {
       "username": "user1",
       "email": "user1@example.com",
