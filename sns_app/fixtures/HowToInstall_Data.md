@@ -5,6 +5,7 @@ Post
 Like
 Comment
 Follow
+
 データ投入の順番は、各テーブルが他のテーブルに依存する順番に従っています。
 Profileは他のテーブルに依存しないため、最初に投入されます。
 PostはProfile（正確にはCustomUser）に依存し、

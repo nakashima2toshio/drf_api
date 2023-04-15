@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'sns_app.apps.SnsAppConfig',
     'ec_app.apps.EcAppConfig',
+    'todo_task.apps.TodoTaskConfig',
     'corsheaders',
 ]
 
