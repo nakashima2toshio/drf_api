@@ -8,6 +8,12 @@ class TaskListView(ListView):
     template_name = 'todo_task/todo_task_list.html'
     context_object_name = 'tasks'
 
+
+class TaskAboutView(ListView):
+    model = Task
+    template_name = 'todo_task/task_about.html'
+    context_object_name = 'tasks'
+
 class TaskCreateView(CreateView):
     model = Task
     form_class = TaskForm
