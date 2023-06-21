@@ -6,6 +6,7 @@ from todo_task.forms import TaskForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 
+
 class CustomLoginView(LoginView):
     template_name = 'todo_task/login.html'
     fields = '__all__'
@@ -17,11 +18,13 @@ class CustomLoginView(LoginView):
 
 from django.contrib.auth.views import LogoutView
 
+
 class CustomLogoutView(LogoutView):
     template_name = 'todo_task/logout.html'
 
     def get_next_page(self):
         return reverse_lazy('todo_task:login')
+
 
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
@@ -30,6 +33,7 @@ class TaskListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
+
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
@@ -40,12 +44,14 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+
 class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'todo_task/task_detail.html'
 
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
+
 
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
@@ -54,6 +60,7 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
+
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task

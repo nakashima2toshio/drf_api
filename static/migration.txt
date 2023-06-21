@@ -4,12 +4,19 @@ python manage.py makemigrations
 
 python manage.py migrate
 
+# create super user
 python manage.py createsuperuser
 
 # run server
-python manage.py runserver localhost:8000/
+python manage.py runserver localhost:8000
+
+# run test
+python manage.py test
 
 # Fixture
 python manage.py loaddata api/init_data/custom_users.json
 
 python manage.py loaddata sns_app/init_data/profiles.json
+
+# requests.txt 一括インストール。
+$ pip install -r requirements.txt
