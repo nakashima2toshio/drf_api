@@ -23,6 +23,15 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'todo_task:about' %}">About</a>
             </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'todo_task:logout' %}">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'todo_task:login' %}">Login</a>
+            </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
@@ -40,3 +49,4 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
+

@@ -1,6 +1,8 @@
 from rest_framework import generics
 from ec_app.models import Customer, CustomerProfile, Order, Product, Category, ProductCategory
-from ec_app.serializers import CustomerSerializer, CustomerProfileSerializer, OrderSerializer, ProductSerializer, CategorySerializer, ProductCategorySerializer
+from ec_app.serializers import CustomerSerializer, CustomerProfileSerializer, OrderSerializer, ProductSerializer, \
+    CategorySerializer, ProductCategorySerializer
+
 
 class CustomerList(generics.ListCreateAPIView):
     queryset = Customer.objects.all()
@@ -60,4 +62,3 @@ class ProductCategoryList(generics.ListCreateAPIView):
 class ProductCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
-

@@ -34,6 +34,7 @@ CustomUser（フォローされる側）とFollowが多対1の関係で紐づい
 CustomUserが削除されると、関連するFollowも削除されます。
 """
 
+
 class Profile(models.Model):
     custom_user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     display_name = models.CharField(max_length=50, blank=True)
