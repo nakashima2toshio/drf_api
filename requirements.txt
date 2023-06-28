@@ -5,7 +5,7 @@ cffi==1.15.1
 charset-normalizer==3.1.0
 coreapi==2.3.3
 coreschema==0.0.4
-coverage==7.2.5
+coverage==7.2.7
 cryptography==41.0.1
 Django==4.2.2
 django-cors-headers==4.1.0
@@ -14,7 +14,7 @@ django-filter==23.2
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 drf-yasg==1.21.6
-Faker==18.11.1
+Faker==18.11.2
 idna==3.4
 inflection==0.5.1
 itypes==1.2.0
@@ -26,7 +26,6 @@ pandas==2.0.2
 Pillow==9.5.0
 psycopg2-binary==2.9.6
 pycparser==2.21
-pygraphviz==1.11
 PyJWT==2.7.0
 python-dateutil==2.8.2
 pytz==2023.3
